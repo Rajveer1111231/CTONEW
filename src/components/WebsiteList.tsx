@@ -12,7 +12,8 @@ import {
   Globe, 
   Search, 
   Calendar,
-  Tag
+  Tag,
+  Zap
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
@@ -121,14 +122,16 @@ const WebsiteList = ({
   const filteredWebsites = websites.filter(website => website.listId === activeListId);
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <Card className="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
+    <div className="max-w-6xl mx-auto p-4">
+      <Card className="mb-8 bg-gradient-to-br from-gray-900 to-gray-950 border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl">
-            <Globe className="h-6 w-6 text-blue-500" />
-            {activeList ? activeList.name : "Select a List"}
+          <CardTitle className="flex items-center gap-2 text-2xl text-purple-400">
+            <Zap className="h-6 w-6 text-purple-400" />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
+              {activeList ? activeList.name : "Select a List"}
+            </span>
           </CardTitle>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-purple-300/70">
             {activeList 
               ? "Add websites to your selected list" 
               : "Please select a list from the manager above"}
@@ -137,39 +140,42 @@ const WebsiteList = ({
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Website Name</Label>
+              <Label htmlFor="name" className="text-purple-300">Website Name</Label>
               <Input
                 id="name"
                 placeholder="e.g., GitHub"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 disabled={!activeListId}
+                className="bg-gray-800/50 border-purple-500/30 text-purple-100 focus:ring-2 focus:ring-purple-500/50 disabled:opacity-50"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="url">URL</Label>
+              <Label htmlFor="url" className="text-purple-300">URL</Label>
               <Input
                 id="url"
                 placeholder="https://example.com"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 disabled={!activeListId}
+                className="bg-gray-800/50 border-purple-500/30 text-purple-100 focus:ring-2 focus:ring-purple-500/50 disabled:opacity-50"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="category">Category (Optional)</Label>
+              <Label htmlFor="category" className="text-purple-300">Category (Optional)</Label>
               <Input
                 id="category"
                 placeholder="e.g., Development"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 disabled={!activeListId}
+                className="bg-gray-800/50 border-purple-500/30 text-purple-100 focus:ring-2 focus:ring-purple-500/50 disabled:opacity-50"
               />
             </div>
             <div className="flex items-end">
               <Button 
                 onClick={addWebsite} 
-                className="w-full bg-blue-600 hover:bg-blue-700"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-[0_0_10px_rgba(168,85,247,0.3)] disabled:opacity-50"
                 disabled={!activeListId}
               >
                 <Plus className="mr-2 h-4 w-4" />
@@ -181,21 +187,21 @@ const WebsiteList = ({
       </Card>
 
       {!activeListId ? (
-        <Card className="text-center py-12">
+        <Card className="text-center py-12 bg-gray-900/50 border border-purple-500/20 backdrop-blur-sm">
           <CardContent>
-            <FolderOpen className="mx-auto h-12 w-12 text-muted-foreground" />
-            <h3 className="mt-4 text-lg font-medium">No List Selected</h3>
-            <p className="mt-2 text-muted-foreground">
+            <FolderOpen className="mx-auto h-12 w-12 text-purple-400/50" />
+            <h3 className="mt-4 text-lg font-medium text-purple-300">No List Selected</h3>
+            <p className="mt-2 text-purple-300/70">
               Select a list from the manager above to start adding websites
             </p>
           </CardContent>
         </Card>
       ) : filteredWebsites.length === 0 ? (
-        <Card className="text-center py-12">
+        <Card className="text-center py-12 bg-gray-900/50 border border-purple-500/20 backdrop-blur-sm">
           <CardContent>
-            <Globe className="mx-auto h-12 w-12 text-muted-foreground" />
-            <h3 className="mt-4 text-lg font-medium">No websites in this list</h3>
-            <p className="mt-2 text-muted-foreground">
+            <Globe className="mx-auto h-12 w-12 text-purple-400/50" />
+            <h3 className="mt-4 text-lg font-medium text-purple-300">No websites in this list</h3>
+            <p className="mt-2 text-purple-300/70">
               Add your first website using the form above
             </p>
           </CardContent>
@@ -205,13 +211,13 @@ const WebsiteList = ({
           {filteredWebsites.map((website) => (
             <Card 
               key={website.id} 
-              className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              className="hover:shadow-[0_0_15px_rgba(168,85,247,0.2)] transition-all duration-300 hover:-translate-y-1 bg-gray-900/50 border border-gray-700 backdrop-blur-sm"
             >
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg">
-                      <Globe className="h-4 w-4 text-blue-600 dark:text-blue-300" />
+                  <CardTitle className="text-lg flex items-center gap-2 text-purple-300">
+                    <div className="bg-purple-900/30 p-2 rounded-lg">
+                      <Globe className="h-4 w-4 text-purple-400" />
                     </div>
                     <span className="truncate max-w-[140px]">{website.name}</span>
                   </CardTitle>
@@ -219,7 +225,7 @@ const WebsiteList = ({
                     variant="ghost"
                     size="icon"
                     onClick={() => removeWebsite(website.id, website.name)}
-                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    className="text-rose-500 hover:text-rose-400 hover:bg-rose-500/10"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -227,18 +233,18 @@ const WebsiteList = ({
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center text-sm text-muted-foreground">
+                  <div className="flex items-center text-sm text-purple-300/70">
                     <Tag className="mr-2 h-4 w-4" />
                     <span className="truncate">{website.category}</span>
                   </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
+                  <div className="flex items-center text-sm text-purple-300/70">
                     <Calendar className="mr-2 h-4 w-4" />
                     <span>{format(website.createdAt, "MMM d, yyyy")}</span>
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="w-full mt-2"
+                    className="w-full mt-2 border-purple-500/30 text-purple-300 hover:bg-purple-500/10"
                     onClick={() => openWebsite(website.url)}
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
