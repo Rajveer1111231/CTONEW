@@ -10,7 +10,7 @@ import {
   Plus, 
   Trash2, 
   Globe, 
-  Search,
+  Search, 
   Calendar,
   Tag
 } from "lucide-react";
@@ -23,10 +23,26 @@ interface Website {
   url: string;
   category: string;
   createdAt: Date;
+  listId: string;
 }
 
-const WebsiteList = () => {
-  const [websites, setWebsites] = useState<Website[]>([]);
+interface WebsiteList {
+  id: string;
+  name: string;
+  createdAt: Date;
+}
+
+const WebsiteList = ({ 
+  websites, 
+  setWebsites, 
+  lists,
+  activeListId 
+}: {
+  websites: Website[];
+  setWebsites: (websites: Website[]) => void;
+  lists: WebsiteList[];
+  activeListId: string | null;
+}) => {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [category, setCategory] = useState("");
@@ -42,6 +58,15 @@ const WebsiteList = () => {
   };
 
   const addWebsite = () => {
+    if (!activeListId) {
+      toast({
+        title: "No List Selected",
+        description: "Please select a list first",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!name.trim() || !url.trim()) {
       toast({
         title: "Validation Error",
@@ -66,6 +91,7 @@ const WebsiteList = () => {
       url,
       category: category || "General",
       createdAt: new Date(),
+      listId: activeListId,
     };
 
     setWebsites([...websites, newWebsite]);
@@ -91,16 +117,21 @@ const WebsiteList = () => {
     window.open(url, "_blank");
   };
 
+  const activeList = lists.find(list => list.id === activeListId);
+  const filteredWebsites = websites.filter(website => website.listId === activeListId);
+
   return (
     <div className="max-w-4xl mx-auto p-4">
       <Card className="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-2xl">
             <Globe className="h-6 w-6 text-blue-500" />
-            Website Manager
+            {activeList ? activeList.name : "Select a List"}
           </CardTitle>
           <p className="text-muted-foreground">
-            Add and manage your favorite websites
+            {activeList 
+              ? "Add websites to your selected list" 
+              : "Please select a list from the manager above"}
           </p>
         </CardHeader>
         <CardContent>
@@ -112,6 +143,7 @@ const WebsiteList = () => {
                 placeholder="e.g., GitHub"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled={!activeListId}
               />
             </div>
             <div className="space-y-2">
@@ -121,6 +153,7 @@ const WebsiteList = () => {
                 placeholder="https://example.com"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
+                disabled={!activeListId}
               />
             </div>
             <div className="space-y-2">
@@ -130,12 +163,14 @@ const WebsiteList = () => {
                 placeholder="e.g., Development"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+                disabled={!activeListId}
               />
             </div>
             <div className="flex items-end">
               <Button 
                 onClick={addWebsite} 
                 className="w-full bg-blue-600 hover:bg-blue-700"
+                disabled={!activeListId}
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Website
@@ -145,11 +180,21 @@ const WebsiteList = () => {
         </CardContent>
       </Card>
 
-      {websites.length === 0 ? (
+      {!activeListId ? (
+        <Card className="text-center py-12">
+          <CardContent>
+            <FolderOpen className="mx-auto h-12 w-12 text-muted-foreground" />
+            <h3 className="mt-4 text-lg font-medium">No List Selected</h3>
+            <p className="mt-2 text-muted-foreground">
+              Select a list from the manager above to start adding websites
+            </p>
+          </CardContent>
+        </Card>
+      ) : filteredWebsites.length === 0 ? (
         <Card className="text-center py-12">
           <CardContent>
             <Globe className="mx-auto h-12 w-12 text-muted-foreground" />
-            <h3 className="mt-4 text-lg font-medium">No websites added</h3>
+            <h3 className="mt-4 text-lg font-medium">No websites in this list</h3>
             <p className="mt-2 text-muted-foreground">
               Add your first website using the form above
             </p>
@@ -157,7 +202,7 @@ const WebsiteList = () => {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {websites.map((website) => (
+          {filteredWebsites.map((website) => (
             <Card 
               key={website.id} 
               className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
