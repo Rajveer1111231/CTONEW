@@ -13,7 +13,7 @@ import {
   FolderOpen,
   FolderPlus,
   Sparkles
-} from "licade-react";
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface WebsiteList {
