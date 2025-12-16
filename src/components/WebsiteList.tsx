@@ -28,7 +28,7 @@ interface Website {
   listId: string;
 }
 
-interface WebsiteList {
+interface WebsiteListType { // Renamed from WebsiteList to WebsiteListType
   id: string;
   name: string;
   createdAt: Date;
@@ -42,7 +42,7 @@ const WebsiteList = ({
 }: {
   websites: Website[];
   setWebsites: (websites: Website[]) => void;
-  lists: WebsiteList[];
+  lists: WebsiteListType[]; // Using WebsiteListType here
   activeListId: string | null;
 }) => {
   const [name, setName] = useState("");

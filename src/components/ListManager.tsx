@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface WebsiteList {
+interface WebsiteListType { // Renamed from WebsiteList to WebsiteListType
   id: string;
   name: string;
   createdAt: Date;
@@ -28,8 +28,8 @@ const ListManager = ({
   activeListId, 
   setActiveListId 
 }: {
-  lists: WebsiteList[];
-  setLists: (lists: WebsiteList[]) => void;
+  lists: WebsiteListType[]; // Using WebsiteListType here
+  setLists: (lists: WebsiteListType[]) => void; // Using WebsiteListType here
   activeListId: string | null;
   setActiveListId: (id: string) => void;
 }) => {
@@ -46,7 +46,7 @@ const ListManager = ({
       return;
     }
 
-    const newList: WebsiteList = {
+    const newList: WebsiteListType = { // Using WebsiteListType here
       id: Math.random().toString(36).substring(2, 9),
       name: newListName,
       createdAt: new Date(),

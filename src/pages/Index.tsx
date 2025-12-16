@@ -3,9 +3,8 @@ import { useState } from "react";
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import WebsiteList from "@/components/WebsiteList";
 import ListManager from "@/components/ListManager";
-import ROICalculator from "@/components/ROICalculator"; // Import the new component
 
-interface WebsiteType {
+interface Website {
   id: string;
   name: string;
   url: string;
@@ -14,15 +13,15 @@ interface WebsiteType {
   listId: string;
 }
 
-interface WebsiteListType {
+interface WebsiteListType { // Renamed from WebsiteList to WebsiteListType
   id: string;
   name: string;
   createdAt: Date;
 }
 
 const Index = () => {
-  const [websites, setWebsites] = useState<WebsiteType[]>([]);
-  const [lists, setLists] = useState<WebsiteListType[]>([
+  const [websites, setWebsites] = useState<Website[]>([]);
+  const [lists, setLists] = useState<WebsiteListType[]>([ // Using WebsiteListType here
     { id: "default", name: "My Websites", createdAt: new Date() }
   ]);
   const [activeListId, setActiveListId] = useState<string | null>("default");
@@ -64,9 +63,6 @@ const Index = () => {
           lists={lists}
           activeListId={activeListId} 
         />
-
-        {/* Add the new ROI Calculator component here */}
-        <ROICalculator />
         
         <div className="mt-16">
           <MadeWithDyad />
