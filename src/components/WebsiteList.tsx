@@ -13,7 +13,8 @@ import {
   Search, 
   Calendar,
   Tag,
-  Zap
+  Zap,
+  FolderOpen
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
