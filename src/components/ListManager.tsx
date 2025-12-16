@@ -62,10 +62,21 @@ const ListManager = ({
   };
 
   const removeList = (id: string, name: string) => {
-    setLists(lists.filter(list => list.id !== id));
+    // Create a new list array without the deleted list
+    const updatedLists = lists.filter(list => list.id !== id);
+    setLists(updatedLists);
+    
+    // If the deleted list was the active list, select a new active list
     if (activeListId === id) {
-      setActiveListId(lists.length > 1 ? lists[0].id : "");
+      // If there are remaining lists, select the first one
+      // Otherwise, set activeListId to null (no list selected)
+      if (updatedLists.length > 0) {
+        setActiveListId(updatedLists[0].id);
+      } else {
+        setActiveListId("");
+      }
     }
+    
     toast({
       title: "List Removed",
       description: `${name} has been deleted`,
