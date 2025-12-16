@@ -25,7 +25,7 @@ interface WebsiteListType {
 }
 
 const Index = () => {
-  const { isLoggedIn, logout } = useAuth(); // Use the auth hook
+  const { isLoggedIn, userEmail, logout } = useAuth(); // Get userEmail from auth hook
 
   // Use useLocalStorage for persistent state
   const [lists, setLists] = useLocalStorage<WebsiteListType[]>("sitemanager-lists", [
@@ -63,14 +63,17 @@ const Index = () => {
             </div>
           </div>
           {isLoggedIn && (
-            <Button 
-              onClick={logout} 
-              variant="outline" 
-              className="border-red-500/30 text-red-300 hover:bg-red-500/10"
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
+            <div className="flex items-center gap-4">
+              {userEmail && <span className="text-sm text-gray-400">Logged in as: {userEmail}</span>}
+              <Button 
+                onClick={logout} 
+                variant="outline" 
+                className="border-red-500/30 text-red-300 hover:bg-red-500/10"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Button>
+            </div>
           )}
         </header>
         
