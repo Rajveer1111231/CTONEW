@@ -4,10 +4,6 @@ import WebsiteList from "@/components/WebsiteList";
 import ListManager from "@/components/ListManager";
 import ROICalculator from "@/components/ROICalculator";
 import useLocalStorage from "@/hooks/use-local-storage";
-import { useAuth } from "@/components/AuthContext"; // Import useAuth
-import LoginForm from "@/components/LoginForm"; // Import LoginForm
-import { Button } from "@/components/ui/button"; // Import Button
-import { LogOut } from "lucide-react"; // Import LogOut icon
 
 interface WebsiteType {
   id: string;
@@ -25,18 +21,12 @@ interface WebsiteListType {
 }
 
 const Index = () => {
-  const { isLoggedIn, userEmail, logout } = useAuth(); // Get userEmail from auth hook
-
   // Use useLocalStorage for persistent state
   const [lists, setLists] = useLocalStorage<WebsiteListType[]>("sitemanager-lists", [
     { id: "default", name: "My Websites", createdAt: new Date() }
   ]);
   const [websites, setWebsites] = useLocalStorage<WebsiteType[]>("sitemanager-websites", []);
   const [activeListId, setActiveListId] = useLocalStorage<string | null>("sitemanager-active-list", "default");
-
-  if (!isLoggedIn) {
-    return <LoginForm />;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 to-gray-900 text-gray-100">
@@ -62,19 +52,6 @@ const Index = () => {
               <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"></div>
             </div>
           </div>
-          {isLoggedIn && (
-            <div className="flex items-center gap-4">
-              {userEmail && <span className="text-sm text-gray-400">Logged in as: {userEmail}</span>}
-              <Button 
-                onClick={logout} 
-                variant="outline" 
-                className="border-red-500/30 text-red-300 hover:bg-red-500/10"
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
-            </div>
-          )}
         </header>
         
         <ListManager 
