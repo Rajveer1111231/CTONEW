@@ -3,8 +3,10 @@ import { useState } from "react";
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import WebsiteList from "@/components/WebsiteList";
 import ListManager from "@/components/ListManager";
+import ROICalculator from "@/components/ROICalculator";
+import useLocalStorage from "@/hooks/use-local-storage"; // Import the new hook
 
-interface Website {
+interface WebsiteType {
   id: string;
   name: string;
   url: string;
@@ -13,18 +15,19 @@ interface Website {
   listId: string;
 }
 
-interface WebsiteListType { // Renamed from WebsiteList to WebsiteListType
+interface WebsiteListType {
   id: string;
   name: string;
   createdAt: Date;
 }
 
 const Index = () => {
-  const [websites, setWebsites] = useState<Website[]>([]);
-  const [lists, setLists] = useState<WebsiteListType[]>([ // Using WebsiteListType here
+  // Use useLocalStorage for persistent state
+  const [lists, setLists] = useLocalStorage<WebsiteListType[]>("sitemanager-lists", [
     { id: "default", name: "My Websites", createdAt: new Date() }
   ]);
-  const [activeListId, setActiveListId] = useState<string | null>("default");
+  const [websites, setWebsites] = useLocalStorage<WebsiteType[]>("sitemanager-websites", []);
+  const [activeListId, setActiveListId] = useLocalStorage<string | null>("sitemanager-active-list", "default");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 to-gray-900 text-gray-100">
@@ -63,6 +66,8 @@ const Index = () => {
           lists={lists}
           activeListId={activeListId} 
         />
+
+        <ROICalculator />
         
         <div className="mt-16">
           <MadeWithDyad />
