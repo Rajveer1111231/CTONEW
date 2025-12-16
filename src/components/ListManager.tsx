@@ -13,7 +13,7 @@ import {
   FolderOpen,
   FolderPlus,
   Sparkles
-} from "lucide-react";
+} from "licade-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface WebsiteList {
@@ -79,7 +79,7 @@ const ListManager = ({
           <CardTitle className="flex items-center gap-2 text-2xl text-cyan-400">
             <Sparkles className="h-6 w-6 text-cyan-400" />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
-              Manage Lists
+              SiteManager Pro
             </span>
           </CardTitle>
           <p className="text-muted-foreground text-cyan-300/70">

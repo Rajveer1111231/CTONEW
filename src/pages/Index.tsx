@@ -39,11 +39,11 @@ const Index = () => {
         <header className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500">
-              CyberWeb Manager
+              SiteManager Pro
             </span>
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Organize and access your favorite websites with our futuristic interface
+            Professional website organization with futuristic interface
           </p>
           <div className="mt-4 flex justify-center">
             <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"></div>
