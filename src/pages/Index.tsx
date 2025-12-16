@@ -2,7 +2,6 @@
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import WebsiteList from "@/components/WebsiteList";
 import ListManager from "@/components/ListManager";
-import ROICalculator from "@/components/ROICalculator";
 import useLocalStorage from "@/hooks/use-local-storage";
 
 interface WebsiteType {
@@ -67,8 +66,6 @@ const Index = () => {
           lists={lists}
           activeListId={activeListId} 
         />
-
-        <ROICalculator />
         
         <div className="mt-16">
           <MadeWithDyad />
